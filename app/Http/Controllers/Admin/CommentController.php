@@ -13,7 +13,8 @@ class CommentController extends Controller
      */
     public function index()
     {
-        return view('admin.comments');
+        $comments = Comment::all();
+        return view('admin.comments', ['comments' => $comments]);
     }
 
     /**

@@ -13,7 +13,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('admin.categories');
+        $categories = Category::all();
+        return view('admin.categories', ['categories' => $categories]);
     }
 
     /**
@@ -29,7 +30,19 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated_data = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        try {
+            $category = new Category();
+            $category->name = $validated_data['name'];
+            $category->save();
+
+            return redirect()->route('admin.categories')->with('success', 'Category created successfully.');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.categories')->with('error', 'Error while creating category.');
+        }
     }
 
     /**
@@ -43,9 +56,9 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($category)
+    public function edit(Category $category)
     {
-        return view('admin.category-edit');
+        return view('admin.category-edit', ['category' => $category]);
     }
 
     /**
@@ -53,7 +66,18 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $validated_data = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        try {
+            $category->name = $validated_data['name'];
+            $category->save();
+
+            return redirect()->route('admin.categories')->with('success', 'Category updated successfully.');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.categories')->with('error', 'Error while updating category.');
+        }
     }
 
     /**
@@ -61,6 +85,11 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        try {
+            $category->delete();
+            return redirect()->route('admin.categories')->with('success', 'Category deleted successfully.');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.categories')->with('error', 'Error while deleting category.');
+        }
     }
 }

@@ -24,114 +24,69 @@
         <!-- Main content -->
         <section class="content mt-lg-1">
             <div class="container-fluid">
-                <div class="mt-3 table-responsive">
-                    <table class="table table-striped table-hover">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th>ID</th>
-                                <th>Text</th>
-                                <th>User</th>
-                                <th>Blog ID</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Frontend</td>
-                                <td>ayushkathariya@gmail.com</td>
-                                <td>4</td>
-                                <td>
-                                    <a href="{{ route('admin.comment-edit', 4) }}" class="btn btn-warning btn-sm btn-edit">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Backend</td>
-                                <td>ayushkathariya@gmail.com</td>
-                                <td>4</td>
-                                <td>
-                                    <button class="btn btn-warning btn-sm">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Dev Oops</td>
-                                <td>ayushkathariya@gmail.com</td>
-                                <td>4</td>
-                                <td>
-                                    <button class="btn btn-warning btn-sm">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Fullstack</td>
-                                <td>ayushkathariya@gmail.com</td>
-                                <td>4</td>
-                                <td>
-                                    <button class="btn btn-warning btn-sm">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>Computer Science</td>
-                                <td>ayushkathariya@gmail.com</td>
-                                <td>4</td>
-                                <td>
-                                    <button class="btn btn-warning btn-sm">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                @if ($comments)
+                    <div class="mt-3 table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Text</th>
+                                    <th>User</th>
+                                    <th>Blog ID</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($comments as $comment)
+                                    <tr>
+                                        <td>{{ $comment->id }}</td>
+                                        <td>{{ $comment->comment_text }}</td>
+                                        <td>{{ $comment->user_id }}</td>
+                                        <td>{{ $comment->blog_id }}</td>
+                                        <td>
+                                            <a href="{{ route('admin.comment-edit', 4) }}"
+                                                class="btn btn-warning btn-sm btn-edit">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <button class="btn btn-danger btn-sm" data-toggle="modal"
+                                                data-target="#deleteModal">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
 
-            <!-- Modal -->
-            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            Are you sure you want to delete this item?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-danger">Delete</button>
-                        </div>
+                            </tbody>
+                        </table>
                     </div>
+                @else
+                    <div class="text-danger">No Comments Yet!</div>
+                @endif
+
+            </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this item?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger">Delete</button>
                 </div>
             </div>
+        </div>
+    </div>
 
     </div>
 @endsection

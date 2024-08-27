@@ -31,8 +31,7 @@
                         <!-- small box -->
                         <div class="small-box bg-warning">
                             <div class="inner">
-                                <h3>44</h3>
-
+                                <h3>{{ $users_count }}</h3>
                                 <p>User Registrations</p>
                             </div>
                             <div class="icon">
@@ -47,8 +46,7 @@
                         <!-- small box -->
                         <div class="small-box bg-info">
                             <div class="inner">
-                                <h3>150</h3>
-
+                                <h3>{{ $tags_count }}</h3>
                                 <p>Tags</p>
                             </div>
                             <div class="icon">
@@ -63,8 +61,7 @@
                         <!-- small box -->
                         <div class="small-box bg-success">
                             <div class="inner">
-                                <h3>53<sup style="font-size: 20px">%</sup></h3>
-
+                                <h3>{{ $blogs_count }}</h3>
                                 <p>Blogs</p>
                             </div>
                             <div class="icon">
@@ -76,10 +73,9 @@
                     </div>
                     <div class="col-lg-4 col-6">
                         <!-- small box -->
-                        <div class="small-box bg-danger">
+                        <div class="small-box bg-success">
                             <div class="inner">
-                                <h3>65</h3>
-
+                                <h3>{{ $blogtags_count }}</h3>
                                 <p>Blog Tag</p>
                             </div>
                             <div class="icon">
@@ -93,8 +89,7 @@
                         <!-- small box -->
                         <div class="small-box bg-danger">
                             <div class="inner">
-                                <h3>65</h3>
-
+                                <h3>{{ $categories_count }}</h3>
                                 <p>Categories</p>
                             </div>
                             <div class="icon">
@@ -106,10 +101,9 @@
                     </div>
                     <div class="col-lg-4 col-6">
                         <!-- small box -->
-                        <div class="small-box bg-danger">
+                        <div class="small-box bg-warning">
                             <div class="inner">
-                                <h3>65</h3>
-
+                                <h3>{{ $comments_count }}</h3>
                                 <p>Comments</p>
                             </div>
                             <div class="icon">

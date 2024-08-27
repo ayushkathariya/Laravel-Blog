@@ -35,56 +35,24 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>3</td>
-                                <td>2</td>
-                                <td>
-                                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>3</td>
-                                <td>2</td>
-                                <td>
-                                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>3</td>
-                                <td>2</td>
-                                <td>
-                                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>3</td>
-                                <td>2</td>
-                                <td>
-                                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>3</td>
-                                <td>2</td>
-                                <td>
-                                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </td>
-                            </tr>
+                            @if ($blog_tags)
+                                @foreach ($blog_tags as $blog_tag)
+                                    <tr>
+                                        <td>{{ $blog_tag->id }}</td>
+                                        <td>{{ $blog_tag->blog_id }}</td>
+                                        <td>{{ $blog_tag->tag_id }}</td>
+                                        <td>
+                                            <button class="btn btn-danger btn-sm" data-toggle="modal"
+                                                data-target="#deleteModal">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <div class="text-danger">No Blog Tags</div>
+                            @endif
+
                         </tbody>
                     </table>
                 </div>

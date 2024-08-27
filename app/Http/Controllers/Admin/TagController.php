@@ -13,7 +13,9 @@ class TagController extends Controller
      */
     public function index()
     {
-        return view('admin.tags');
+        $tags = Tag::all();
+
+        return view('admin.tags', ['tags' => $tags]);
     }
 
     /**
@@ -29,7 +31,19 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated_data = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        try {
+            $tag = new Tag();
+            $tag->name = $validated_data['name'];
+            $tag->save();
+
+            return redirect()->route('admin.tags')->with('success', 'Tag created successfully.');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.tags')->with('error', 'Error while creating tags.');
+        }
     }
 
     /**
@@ -43,9 +57,9 @@ class TagController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($tag)
+    public function edit(Tag $tag)
     {
-        return view('admin.tag-edit');
+        return view('admin.tag-edit', ['tag' => $tag]);
     }
 
     /**
@@ -53,7 +67,18 @@ class TagController extends Controller
      */
     public function update(Request $request, Tag $tag)
     {
-        //
+        $validated_data = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        try {
+            $tag->name = $validated_data['name'];
+            $tag->save();
+
+            return redirect()->route('admin.tags')->with('success', 'Tag updated successfully.');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.tags')->with('error', 'Error while updating tags.');
+        }
     }
 
     /**
@@ -61,6 +86,11 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
-        //
+        try {
+            $tag->delete();
+            return redirect()->route('admin.tags')->with('success', 'Tag deleted successfully.');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.tags')->with('error', 'Error while deleting tag.');
+        }
     }
 }

@@ -27,159 +27,110 @@
                 <div>
                     <a href="#" class="btn btn-primary">Create</a>
                 </div>
-                <div class="mt-3 table-responsive">
-                    <table class="table table-striped table-hover">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Verified</th>
-                                <th>Admin</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>John Doe</td>
-                                <td>john.doe@example.com</td>
-                                <td>
-                                    <span class="badge badge-success">
-                                        <i class="fas fa-check"></i>
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="badge badge-success">
-                                        <i class="fas fa-user-shield"></i>
-                                    </span>
-                                </td>
-                                <td>
-                                    <a href="{{ route('admin.user-edit', 3) }}" class="btn btn-warning btn-sm btn-edit">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Jane Smith</td>
-                                <td>jane.smith@example.com</td>
-                                <td>
-                                    <span class="badge bg-danger">
-                                        <i class="fas fa-times"></i>
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="badge bg-danger">
-                                        <i class="fas fa-times"></i>
-                                    </span>
-                                </td>
-                                <td>
-                                    <button class="btn btn-warning btn-sm">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Michael Johnson</td>
-                                <td>michael.johnson@example.com</td>
-                                <td>
-                                    <span class="badge bg-success">
-                                        <i class="fas fa-check"></i>
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="badge bg-danger">
-                                        <i class="fas fa-times"></i>
-                                    </span>
-                                </td>
-                                <td>
-                                    <button class="btn btn-warning btn-sm">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Emily Davis</td>
-                                <td>emily.davis@example.com</td>
-                                <td>
-                                    <span class="badge bg-danger">
-                                        <i class="fas fa-times"></i>
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="badge bg-danger">
-                                        <i class="fas fa-times"></i>
-                                    </span>
-                                </td>
-                                <td>
-                                    <button class="btn btn-warning btn-sm">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>Chris Brown</td>
-                                <td>chris.brown@example.com</td>
-                                <td>
-                                    <span class="badge bg-success">
-                                        <i class="fas fa-check"></i>
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="badge bg-danger">
-                                        <i class="fas fa-times"></i>
-                                    </span>
-                                </td>
-                                <td>
-                                    <button class="btn btn-warning btn-sm">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+
+                @if ($users)
+                    <div class="mt-3 table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Verified</th>
+                                    <th>Admin</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($users as $user)
+                                    <tr>
+                                        <td>{{ $user->id }}</td>
+                                        <td>{{ $user->name }}</td>
+                                        <td>{{ $user->email }}</td>
+                                        <td>
+                                            @if ($user->email_verified_at)
+                                                <span class="badge badge-success">
+                                                    <i class="fas fa-check"></i>
+                                                </span>
+                                            @else
+                                                <span class="badge badge-danger">
+                                                    <i class="fas fa-times"></i>
+                                                </span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($user->is_admin)
+                                                <span class="badge badge-success">
+                                                    <i class="fas fa-user-shield"></i>
+                                                </span>
+                                            @else
+                                                <span class="badge badge-danger">
+                                                    <i class="fas fa-times"></i>
+                                                </span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('admin.user-edit', $user->id) }}"
+                                                class="btn btn-warning btn-sm btn-edit">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <button class="btn btn-danger btn-sm" data-toggle="modal"
+                                                data-target="#modal-{{ $user->id }}">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="modal-{{ $user->id }}" tabindex="-1" role="dialog"
+                                        aria-labelledby="deleteModalLabel-{{ $user->id }}" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="deleteModalLabel-{{ $user->id }}">
+                                                        Confirm Deletion</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Are you sure you want to delete user {{ $user->id }}?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Cancel</button>
+                                                    <form action="{{ route('admin.user-destroy', $user->id) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @endif
             </div>
 
-            <!-- Modal -->
-            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            Are you sure you want to delete this item?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-danger">Delete</button>
-                        </div>
+            <!-- Display success or error messages -->
+
+            <div class="mt-4">
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
                     </div>
-                </div>
+                @endif
+
+                @if (session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
             </div>
 
     </div>

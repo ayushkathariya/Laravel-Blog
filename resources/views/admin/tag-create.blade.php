@@ -30,10 +30,14 @@
                 <div>
                     <a href="{{ route('admin.tags') }}" class="btn btn-primary">Back</a>
                 </div>
-                <form action="#" method="POST" class="px-4 py-5 mt-3 border rounded">
+                <form action="{{ route('admin.tag-store') }}" method="POST" class="px-4 py-5 mt-3 border rounded">
+                    @csrf
                     <div class="form-group">
                         <label for="name">Name</label>
-                        <input type="text" name="name" id="name" class="form-control" value="John Doe" required>
+                        <input type="text" name="name" id="name" class="form-control" required>
+                        @error('name')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                     <button type="submit" class="btn btn-success">Create</button>
                 </form>

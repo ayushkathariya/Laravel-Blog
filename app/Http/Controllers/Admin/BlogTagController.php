@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\BlogTag;
 use Illuminate\Http\Request;
 
 class BlogTagController extends Controller
@@ -12,7 +13,8 @@ class BlogTagController extends Controller
      */
     public function index()
     {
-        return view('admin.blogtags');
+        $blog_tags = BlogTag::all();
+        return view('admin.blogtags', compact('blog_tags'));
     }
 
     /**

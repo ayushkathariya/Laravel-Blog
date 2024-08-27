@@ -27,133 +27,92 @@
                 <div>
                     <a href="{{ route('admin.blog-create') }}" class="btn btn-primary">Create</a>
                 </div>
-                <div class="mt-3 table-responsive">
-                    <table class="table table-striped table-hover">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th>ID</th>
-                                <th>Title</th>
-                                <th>Published</th>
-                                <th>Created At</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Lorem ipsum dolor sit amet.</td>
-                                <td>
-                                    <span class="badge badge-success">
-                                        <i class="fas fa-check"></i>
-                                    </span>
-                                </td>
-                                <td>2081-02-06</td>
-                                <td>
-                                    <a href="{{ route('admin.blog-edit', 9) }}" class="btn btn-warning btn-sm btn-edit">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Lorem ipsum dolor sit amet.</td>
-                                <td>
-                                    <span class="badge badge-success">
-                                        <i class="fas fa-check"></i>
-                                    </span>
-                                </td>
-                                <td>2081-02-06</td>
-                                <td>
-                                    <button class="btn btn-warning btn-sm">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Lorem ipsum dolor sit amet.</td>
-                                <td>
-                                    <span class="badge bg-danger">
-                                        <i class="fas fa-times"></i>
-                                    </span>
-                                </td>
-                                <td>2081-02-06</td>
-                                <td>
-                                    <button class="btn btn-warning btn-sm">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Lorem ipsum dolor sit amet.</td>
-                                <td>
-                                    <span class="badge badge-success">
-                                        <i class="fas fa-check"></i>
-                                    </span>
-                                </td>
-                                <td>2081-02-06</td>
-                                <td>
-                                    <button class="btn btn-warning btn-sm">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>Lorem ipsum dolor sit amet.</td>
-                                <td>
-                                    <span class="badge bg-danger">
-                                        <i class="fas fa-times"></i>
-                                    </span>
-                                </td>
-                                <td>2081-02-06</td>
-                                <td>
-                                    <button class="btn btn-warning btn-sm">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                @if ($blogs)
+                    <div class="mt-3 table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Title</th>
+                                    <th>Published</th>
+                                    <th>Created At</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($blogs as $blog)
+                                    <tr>
+                                        <td>{{ $blog->id }}</td>
+                                        <td>{{ $blog->title }}</td>
+                                        <td>
+                                            @if ($blog->is_published)
+                                                <span class="badge badge-success">
+                                                    <i class="fas fa-check"></i>
+                                                </span>
+                                            @else
+                                                <span class="badge badge-danger">
+                                                    <i class="fas fa-times"></i>
+                                                </span>
+                                            @endif
+                                        </td>
+                                        <td>{{ $blog->created_at }}</td>
+                                        <td>
+                                            <a href="{{ route('admin.blog-edit', $blog->id) }}"
+                                                class="btn btn-warning btn-sm btn-edit">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <button class="btn btn-danger btn-sm" data-toggle="modal"
+                                                data-target="#model-{{ $blog->id }}">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="model-{{ $blog->id }}" tabindex="-1" role="dialog"
+                                        aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Are you sure you want to delete this item?
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">Cancel</button>
+                                                    <form action="{{ route('admin.blog-destroy', $blog->id) }}"
+                                                        method="post">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                @else
+                    <h2 class="text-danger">No Blog</h2>
+                @endif
             </div>
 
-            <!-- Modal -->
-            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            Are you sure you want to delete this item?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-danger">Delete</button>
-                        </div>
-                    </div>
-                </div>
+            <div class="mt-3">
+                @if (session('success'))
+                    <div class="alert alert-success">{{ session('success') }}</div>
+                @endif
+
+                @if (session('error'))
+                    <div class="alert alert-danger">{{ session('error') }}</div>
+                @endif
             </div>
 
     </div>

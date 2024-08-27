@@ -1,6 +1,5 @@
 @extends('admin.layouts.app')
 
-
 @section('content')
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -18,35 +17,49 @@
                             </li>
                             <li class="breadcrumb-item active">Edit</li>
                         </ol>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- /.content-header -->
+
 
         <!-- Main content -->
         <section class="content mt-lg-1">
             <div class="container-fluid">
-                <form action="#" method="POST">
+                <form action="{{ route('admin.user-update', $user->id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
                     <div class="form-group">
                         <label for="name">Name</label>
-                        <input type="text" name="name" id="name" class="form-control" value="John Doe" required>
+                        <input type="text" name="name" id="name" class="form-control" value="{{ $user->name }}"
+                            required>
+                        @error('title')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" name="email" id="email" class="form-control" value="johndoe@example.com"
+                        <input type="email" name="email" id="email" class="form-control" value="{{ $user->email }}"
                             required>
+                        @error('email')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input type="password" name="password" id="password" class="form-control" disabled>
+                        <input type="password" name="password" id="password" value="{{ $user->password }}"
+                            class="form-control" disabled>
                     </div>
 
                     <div class="form-group">
                         <label for="is_admin">Admin</label>
-                        <input type="checkbox" name="is_admin" id="is_admin">
+                        <input type="checkbox" name="is_admin" id="is_admin" value="1"
+                            {{ $user->is_admin == 1 ? 'checked' : '' }}>
+                        @error('is_admin')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <button type="submit" class="btn btn-warning">Update</button>
