@@ -1,11 +1,16 @@
 <?php
 
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Blog;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    $blogs = Blog::all();
+
+    return view('welcome', compact('blogs'));
 })->name('home');
+Route::get('/blogs/{blog}', [BlogController::class, 'show'])->name('blogs.blog-show');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
